@@ -2,7 +2,7 @@
 import torch
 import torch.nn as nn
 
-from layers import MultiHeadAttention, LayerNorm, FeedForward
+from layers import MultiheadAttention, LayerNorm, FeedForward
 from embedding import TransformerEmbedding
 
 class DecoderLayer(nn.Module):
@@ -15,10 +15,10 @@ class DecoderLayer(nn.Module):
         self.dropout_prob = dropout_prob
 
         # Layers
-        self.self_attention = MultiHeadAttention(emb_dim, num_head)
+        self.self_attention = MultiheadAttention(emb_dim, num_head)
         self.dropout1 = nn.Dropout(p=dropout_prob)
         self.layernorm1 = LayerNorm(emb_dim)
-        self.enc_dec_attention = MultiHeadAttention(emb_dim, num_head)
+        self.enc_dec_attention = MultiheadAttention(emb_dim, num_head)
         self.dropout2 = nn.Dropout(p=dropout_prob)
         self.layernorm2 = LayerNorm(emb_dim)
         self.feedforward = FeedForward(emb_dim, ffn_hidden_dim, dropout_prob)

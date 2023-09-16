@@ -60,7 +60,7 @@ def test_self_attention_block(SelfAttention):
     
     print("\033[92mSelf-Attention Block: All tests passed")
 
-def test_multi_head_attention_block(MultiHeadAttention, emb_dim, num_heads):
+def test_multi_head_attention_block(MultiheadAttention, emb_dim, num_heads):
     mha_torch = torch.nn.MultiheadAttention(emb_dim, num_heads)
     W_q, W_k, W_v = mha_torch.in_proj_weight.chunk(3, dim=0)
     b_q, b_k, b_v = mha_torch.in_proj_bias.chunk(3, dim=0)
@@ -68,20 +68,20 @@ def test_multi_head_attention_block(MultiHeadAttention, emb_dim, num_heads):
     concat_bias = mha_torch.out_proj.bias
 
     # Set weights to be the same
-    MultiHeadAttention.W_q.weight.data = W_q
-    MultiHeadAttention.W_k.weight.data = W_k
-    MultiHeadAttention.W_v.weight.data = W_v
-    MultiHeadAttention.W_concat.weight.data = concat_weight
-    MultiHeadAttention.W_q.bias.data = b_q
-    MultiHeadAttention.W_k.bias.data = b_k
-    MultiHeadAttention.W_v.bias.data = b_v
-    MultiHeadAttention.W_concat.bias.data = concat_bias
+    MultiheadAttention.W_q.weight.data = W_q
+    MultiheadAttention.W_k.weight.data = W_k
+    MultiheadAttention.W_v.weight.data = W_v
+    MultiheadAttention.W_concat.weight.data = concat_weight
+    MultiheadAttention.W_q.bias.data = b_q
+    MultiheadAttention.W_k.bias.data = b_k
+    MultiheadAttention.W_v.bias.data = b_v
+    MultiheadAttention.W_concat.bias.data = concat_bias
 
     batch_size = 8
     seq_len = 10
     src = torch.rand(batch_size, seq_len, 3 * emb_dim)
     queries, keys, values = src.chunk(3, dim=-1)
-    attention = MultiHeadAttention(queries, keys, values)
+    attention = MultiheadAttention(queries, keys, values)
     torch_attention, _ = mha_torch(queries.permute(1, 0, 2), keys.permute(1, 0, 2), values.permute(1, 0, 2))
     assert torch.allclose(attention, torch_attention.permute(1, 0, 2)), "Wrong multi-headed attention"
 

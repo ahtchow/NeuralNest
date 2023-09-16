@@ -53,10 +53,10 @@ class SelfAttention(nn.Module):
 
         return attention, weights
 
-class MultiHeadAttention(nn.Module):
+class MultiheadAttention(nn.Module):
 
     def __init__(self, emb_dim, num_head):
-        super(MultiHeadAttention, self).__init__()
+        super(MultiheadAttention, self).__init__()
         self.num_head = num_head
         self.emb_dim = emb_dim
         self.attention = SelfAttention()
@@ -135,7 +135,7 @@ class LayerNorm(nn.Module):
 def main():
     tests.test_positional_encoding_block(PositionalEncoding(8, 16), 8, 16)
     tests.test_self_attention_block(SelfAttention())
-    tests.test_multi_head_attention_block(MultiHeadAttention(512, 8), 512, 8)
+    tests.test_multi_head_attention_block(MultiheadAttention(512, 8), 512, 8)
     tests.test_layer_norm_block(LayerNorm(512), 512)
 
 if __name__ == "__main__":
